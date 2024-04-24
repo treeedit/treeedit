@@ -34,11 +34,16 @@ jobs:
           cd docs
           mkdocs build --clean
           mkdocs --version
+      - name: Update Permissions
+        run: |
+          chmod -c -R +rX docs/site/ | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: docs/site/
+          path: docs/site
   deploy:
     environment:
       name: github-pages
