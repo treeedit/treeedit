@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file>inter-regular-v42.ttf</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>treeedit.icns</file>
+    </qresource>
+</RCC>
