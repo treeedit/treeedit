@@ -34,9 +34,9 @@ jobs:
           cd docs
           mkdocs build --clean
           mkdocs --version
-      - name: Update Permissions
+      - name: Fix Permissions
         run: |
-          chmod -c -R +rX docs/site/ | while read line; do
+          chmod -c -R +rX docs/site | while read line; do
             echo "::warning title=Invalid file permissions automatically fixed::$line"
           done
       - name: Upload Artifact
