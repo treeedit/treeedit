@@ -37,7 +37,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: 'https://treeedit.org'
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: docs/site
+          path: site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
