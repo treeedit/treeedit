@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: docs/site
+          path: docs/site/
   deploy:
     environment:
       name: github-pages
