@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Setup Homebrew
         uses: homebrew/actions/setup-homebrew@master
-      - name: Install Brew Packages
+      - name: Install Homebrew Packages
         run: |
           brew install cmake imagemagick qt svgo
+      - name: Build Tree Edit
+        run: ./build.sh
