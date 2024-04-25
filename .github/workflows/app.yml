@@ -55,4 +55,4 @@ jobs:
       - name: Upload Disk Image Artifact
         uses: actions/upload-artifact@v4
         with:
-          path: build/src/treeedit.dmg
+          path: "build/src/Tree Edit.dmg"
