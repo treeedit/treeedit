@@ -3,7 +3,8 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+    paths:
+      - docs/**
 
 permissions:
   contents: read
@@ -32,8 +33,7 @@ jobs:
       - name: Build MkDocs
         run: |
           cd docs
-          mkdocs build --clean
-          mkdocs --version
+          mkdocs build
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
