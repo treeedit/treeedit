@@ -21,6 +21,6 @@ For a complete list of supported features of the CommonMark Markdown dialect, pl
 
 ## Typography
 
-### Inter
+### Inter font
 
 [Inter font](https://fonts.google.com/specimen/Inter) is used for [`DisplayRole`](https://doc.qt.io/qt-6/qt.html#ItemDataRole-enum), which supports ligatures, thus displaying information nicely.
