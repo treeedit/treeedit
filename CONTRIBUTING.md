@@ -3,7 +3,8 @@
 ## Setup
 
 ```
-brew install cmake git git-lfs imagemagick python3 qt svgo
+brew install git git-lfs python3
+brew install cmake imagemagick qt svgo
 brew install --cask db-browser-for-sqlite qt-creator
 
 python3 -m venv ~/treeedit

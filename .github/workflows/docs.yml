@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
+  group: docs
   cancel-in-progress: false
 
 jobs:

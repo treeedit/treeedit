@@ -1,0 +1,28 @@
+name: app
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/app.yml
+      - CMakeLists.txt
+      - src/**
+      - test/**
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: app
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Setup Homebrew
+        uses: homebrew/actions/setup-homebrew@master
+      - name: Install Brew Packages
+        run: |
+          brew install cmake imagemagick qt svgo
