@@ -3,5 +3,9 @@
 rm -rf build
 qt-cmake -S . -B build
 cmake --build build
-cd build/src
+pushd build/test
+./treeedit-test
+popd
+pushd build/src
 macdeployqt treeedit.app -dmg
+popd

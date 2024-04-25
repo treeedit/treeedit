@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/app.yml
       - CMakeLists.txt
+      - build.sh
       - src/**
       - test/**
 
@@ -28,7 +29,7 @@ jobs:
       - name: Install Homebrew Packages
         run: |
           brew install cmake imagemagick qt svgo
-      - name: Build Tree Edit
+      - name: Build App
         run: ./build.sh
       - name: Upload Disk Image Artifact
         uses: actions/upload-artifact@v4
