@@ -21,6 +21,8 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup Homebrew
         uses: homebrew/actions/setup-homebrew@master
       - name: Install Homebrew Packages
@@ -28,3 +30,7 @@ jobs:
           brew install cmake imagemagick qt svgo
       - name: Build Tree Edit
         run: ./build.sh
+      - name: Upload Disk Image Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: build/src/treeedit.dmg
