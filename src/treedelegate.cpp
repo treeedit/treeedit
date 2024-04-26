@@ -7,8 +7,8 @@ TreeDelegate::TreeDelegate() : _document(std::make_unique<QTextDocument>()) {}
 
 void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                          const QModelIndex &index) const {
-  QVariant markdown = index.data(Qt::DisplayRole);
-  _document->setMarkdown(markdown.toString(), QTextDocument::MarkdownDialectCommonMark);
+  auto markdown = index.data(Qt::DisplayRole).toString();
+  _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
   _document->setDefaultFont(option.font);
   _document->setTextWidth(option.rect.width());
 
@@ -18,9 +18,30 @@ void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
   QFont inter(family);
   _document->setDefaultFont(inter);
 
-  if (option.state & QStyle::State_Selected) {
-    painter->fillRect(option.rect, option.palette.highlight());
+  auto background = option.state & QStyle::State_Selected
+      ? option.palette.highlight()
+                        : option.palette.base();
+
+  // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
+  if (markdown.startsWith("TODO:")) {
+      background.setColor(QColor("yellow"));
+  } else if (markdown.startsWith("DONE:")) {
+      background.setColor(QColor("green"));
+  } else if (markdown.startsWith("BUG:")) {
+      background.setColor(QColor("orange"));
+  } else if (markdown.startsWith("ETA:")) {
+      background.setColor(QColor("purple"));
+  } else if (markdown.startsWith("P0:")) {
+      background.setColor(QColor("red"));
+  } else if (markdown.startsWith("P1:")) {
+      background.setColor(QColor("orange"));
+  } else if (markdown.startsWith("P2:")) {
+      background.setColor(QColor("yellow"));
+  } else if (markdown.startsWith("P3:")) {
+      background.setColor(QColor("purple"));
   }
+
+  painter->fillRect(option.rect, background);
 
   painter->save();
   painter->translate(option.rect.topLeft());
@@ -32,8 +53,8 @@ void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
 QSize TreeDelegate::sizeHint(const QStyleOptionViewItem &option,
                              const QModelIndex &index) const {
-  QVariant markdown = index.data(Qt::DisplayRole);
-  _document->setMarkdown(markdown.toString(), QTextDocument::MarkdownDialectCommonMark);
+  auto markdown = index.data(Qt::DisplayRole).toString();
+  _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
   _document->setDefaultFont(option.font);
   _document->setTextWidth(option.rect.width());
 
