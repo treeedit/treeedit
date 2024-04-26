@@ -3,7 +3,7 @@ repo_url: https://github.com/treeedit/treeedit
 theme:
   name: material
   font:
-    text: Rubik
+    text: Inter
     code: JetBrains Mono
   palette:
     - media: "(prefers-color-scheme)"
