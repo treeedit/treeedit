@@ -1,11 +1,11 @@
-name: docs
+name: pages
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/docs.yml
-      - docs/**
+      - .github/workflows/pages.yml
+      - pages/**
 
 permissions:
   contents: read
@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: docs
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -33,15 +33,15 @@ jobs:
           pip install -r requirements.txt
       - name: Build MkDocs
         run: |
-          cd docs
+          cd pages
           mkdocs build
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/site
+          path: pages/site
   deploy:
     environment:
-      name: github-pages
+      name: pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: macos-latest
     needs: build
