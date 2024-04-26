@@ -2,7 +2,7 @@
 title: Conventions
 ---
 
-# Node
+# Conventions
 
 ## Prefixes
 
