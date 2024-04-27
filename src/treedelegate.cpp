@@ -14,7 +14,7 @@ void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     auto markdown = index.data(Qt::DisplayRole).toString();
     _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
     _document->setDefaultFont(opt.font);
-    _document->setTextWidth(option.rect.width());
+    _document->setTextWidth(opt.rect.width());
 
     painter->fillRect(opt.rect, opt.backgroundBrush);
 
