@@ -1,8 +1,8 @@
 #include "treedelegate.h"
 
 #include <QFont>
+#include <QLineEdit>
 #include <QPainter>
-#include <QPlainTextEdit>
 
 TreeDelegate::TreeDelegate() : _document(std::make_unique<QTextDocument>()) {}
 
@@ -39,25 +39,29 @@ QSize TreeDelegate::sizeHint(const QStyleOptionViewItem &option,
     return QSize(_document->idealWidth(), _document->size().height());
 }
 
-// QWidget *TreeDelegate::createEditor(QWidget *parent,
-//                                     const QStyleOptionViewItem &option,
-//                                     const QModelIndex &index) const {
-//   auto *editor = new QPlainTextEdit(parent);
+QWidget *TreeDelegate::createEditor(QWidget *parent,
+                                    const QStyleOptionViewItem &option,
+                                    const QModelIndex &index) const {
+    auto opt = option;
+    initStyleOption(&opt, index);
 
-//   return editor;
-// }
+    auto *editor = new QLineEdit(parent);
+    editor->setFont(opt.font);
 
-// void TreeDelegate::setEditorData(QWidget *editor,
-//                                  const QModelIndex &index) const {
-//   auto *plaintext_editor = qobject_cast<QPlainTextEdit *>(editor);
-//   plaintext_editor->setPlainText(index.data(Qt::EditRole).toString());
-// }
+    return editor;
+}
 
-// void TreeDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
-//                                 const QModelIndex &index) const {
-//   auto *plaintext_editor = qobject_cast<QPlainTextEdit *>(editor);
-//   model->setData(index, plaintext_editor->toPlainText());
-// }
+void TreeDelegate::setEditorData(QWidget *editor,
+                                 const QModelIndex &index) const {
+    auto *line_edit = qobject_cast<QLineEdit *>(editor);
+    line_edit->setText(index.data(Qt::EditRole).toString());
+}
+
+void TreeDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
+                                const QModelIndex &index) const {
+    auto *line_edit = qobject_cast<QLineEdit *>(editor);
+    model->setData(index, line_edit->text());
+}
 
 void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
                                    const QModelIndex &index) const {
