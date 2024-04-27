@@ -5,6 +5,8 @@
 #include <QDir>
 #include <QErrorMessage>
 #include <QFileDialog>
+#include <QFontDialog>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -107,5 +109,14 @@ void MainWindow::on_actionRemove_triggered() {
   if (_tree_model) {
     auto index = ui->treeView->currentIndex();
     _tree_model->removeItem(index);
+  }
+}
+
+void MainWindow::on_actionFont_triggered() {
+  QSettings settings;
+  bool ok;
+  auto font = QFontDialog::getFont(&ok, this);
+  if (ok) {
+    settings.setValue("view/font", font.toString());
   }
 }

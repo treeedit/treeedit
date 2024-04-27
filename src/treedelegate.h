@@ -1,6 +1,7 @@
 #ifndef TREEDELEGATE_H
 #define TREEDELEGATE_H
 
+#include <QSettings>
 #include <QStyledItemDelegate>
 #include <QTextDocument>
 
@@ -19,8 +20,13 @@ public:
   // override; void setModelData(QWidget *editor, QAbstractItemModel *model,
   //                   const QModelIndex &index) const override;
 
+protected:
+  void initStyleOption(QStyleOptionViewItem *option,
+                       const QModelIndex &index) const override;
+
 private:
   std::unique_ptr<QTextDocument> _document;
+  QSettings _settings;
 };
 
 #endif // TREEDELEGATE_H

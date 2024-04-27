@@ -1,5 +1,6 @@
 #include "treedelegate.h"
 
+#include <QFont>
 #include <QPainter>
 #include <QPlainTextEdit>
 
@@ -7,58 +8,35 @@ TreeDelegate::TreeDelegate() : _document(std::make_unique<QTextDocument>()) {}
 
 void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                          const QModelIndex &index) const {
-  auto markdown = index.data(Qt::DisplayRole).toString();
-  _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
-  _document->setDefaultFont(option.font);
-  _document->setTextWidth(option.rect.width());
+    auto opt = option;
+    initStyleOption(&opt, index);
 
-  // TODO: maybe use `setDefaultStyleSheet` instead, to support bold and italic.
-  auto id = QFontDatabase::addApplicationFont(":/fonts/inter-regular-v42.ttf");
-  auto family = QFontDatabase::applicationFontFamilies(id).at(0);
-  QFont inter(family);
-  _document->setDefaultFont(inter);
+    auto markdown = index.data(Qt::DisplayRole).toString();
+    _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
+    _document->setDefaultFont(opt.font);
+    _document->setTextWidth(option.rect.width());
 
-  auto background = option.state & QStyle::State_Selected
-      ? option.palette.highlight()
-                        : option.palette.base();
+    painter->fillRect(opt.rect, opt.backgroundBrush);
 
-  // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
-  if (markdown.startsWith("TODO:")) {
-      background.setColor(QColor("yellow"));
-  } else if (markdown.startsWith("DONE:")) {
-      background.setColor(QColor("green"));
-  } else if (markdown.startsWith("BUG:")) {
-      background.setColor(QColor("orange"));
-  } else if (markdown.startsWith("ETA:")) {
-      background.setColor(QColor("purple"));
-  } else if (markdown.startsWith("P0:")) {
-      background.setColor(QColor("red"));
-  } else if (markdown.startsWith("P1:")) {
-      background.setColor(QColor("orange"));
-  } else if (markdown.startsWith("P2:")) {
-      background.setColor(QColor("yellow"));
-  } else if (markdown.startsWith("P3:")) {
-      background.setColor(QColor("purple"));
-  }
+    painter->save();
+    painter->translate(opt.rect.topLeft());
 
-  painter->fillRect(option.rect, background);
+    _document->drawContents(painter);
 
-  painter->save();
-  painter->translate(option.rect.topLeft());
-
-  _document->drawContents(painter);
-
-  painter->restore();
+    painter->restore();
 }
 
 QSize TreeDelegate::sizeHint(const QStyleOptionViewItem &option,
                              const QModelIndex &index) const {
-  auto markdown = index.data(Qt::DisplayRole).toString();
-  _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
-  _document->setDefaultFont(option.font);
-  _document->setTextWidth(option.rect.width());
+    auto opt = option;
+    initStyleOption(&opt, index);
 
-  return QSize(_document->idealWidth(), _document->size().height());
+    auto markdown = index.data(Qt::DisplayRole).toString();
+    _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
+    _document->setDefaultFont(opt.font);
+    _document->setTextWidth(opt.rect.width());
+
+    return QSize(_document->idealWidth(), _document->size().height());
 }
 
 // QWidget *TreeDelegate::createEditor(QWidget *parent,
@@ -80,3 +58,36 @@ QSize TreeDelegate::sizeHint(const QStyleOptionViewItem &option,
 //   auto *plaintext_editor = qobject_cast<QPlainTextEdit *>(editor);
 //   model->setData(index, plaintext_editor->toPlainText());
 // }
+
+void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
+                                   const QModelIndex &index) const {
+    auto font = _settings.value("view/font");
+    if (font.isValid()) {
+        option->font.fromString(font.toString());
+    }
+
+    if (option->state & QStyle::State_Selected) {
+        QBrush highlight = option->palette.highlight();
+        option->backgroundBrush.swap(highlight);
+    }
+
+    auto markdown = index.data(Qt::DisplayRole).toString();
+    // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
+    if (markdown.startsWith("TODO:")) {
+        option->backgroundBrush.setColor(QColor("yellow"));
+    } else if (markdown.startsWith("DONE:")) {
+        option->backgroundBrush.setColor(QColor("green"));
+    } else if (markdown.startsWith("BUG:")) {
+        option->backgroundBrush.setColor(QColor("orange"));
+    } else if (markdown.startsWith("ETA:")) {
+        option->backgroundBrush.setColor(QColor("purple"));
+    } else if (markdown.startsWith("P0:")) {
+        option->backgroundBrush.setColor(QColor("red"));
+    } else if (markdown.startsWith("P1:")) {
+        option->backgroundBrush.setColor(QColor("orange"));
+    } else if (markdown.startsWith("P2:")) {
+        option->backgroundBrush.setColor(QColor("yellow"));
+    } else if (markdown.startsWith("P3:")) {
+        option->backgroundBrush.setColor(QColor("purple"));
+    }
+}

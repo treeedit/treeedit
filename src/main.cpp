@@ -5,6 +5,10 @@
 #include <QTranslator>
 
 int main(int argc, char *argv[]) {
+  QCoreApplication::setOrganizationName("Paul Borza");
+  QCoreApplication::setOrganizationDomain("treeedit.org");
+  QCoreApplication::setApplicationName("Tree Edit");
+
   QApplication application(argc, argv);
   // application.setStyle("fusion");
 

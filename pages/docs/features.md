@@ -19,8 +19,9 @@ For a complete list of supported features of the CommonMark Markdown dialect, pl
 | `[link](https://bing.com)` | [link](https://bing.com) |
 | `` `code` `` | `code` |
 
-## Typography
+## View
 
-### Inter font
+### Font
 
-[Inter font](https://fonts.google.com/specimen/Inter) is used for [`DisplayRole`](https://doc.qt.io/qt-6/qt.html#ItemDataRole-enum), which supports ligatures, thus displaying information nicely.
+We recommend you download and install a font, such as the [Inter font](https://fonts.google.com/specimen/Inter), that has support for ligatures.
+Then, please use the *Menu > View > Font* functionality to select the font for displaying nodes.
