@@ -90,28 +90,31 @@ void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
         option->font.fromString(font.toString());
     }
 
-    auto highlight = option->palette.highlight();
-    auto base = option->palette.base();
-    option->backgroundBrush.swap(
-        option->state & QStyle::State_Selected ? highlight : base);
+    if (option->state & QStyle::State_Selected) {
+        auto highlight = option->palette.highlight();
+        option->backgroundBrush.swap(highlight);
+    } else {
+        auto base = option->palette.base();
+        option->backgroundBrush.swap(base);
 
-    // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
-    auto markdown = index.data(Qt::DisplayRole).toString();
-    if (markdown.startsWith("TODO:")) {
-        option->backgroundBrush.setColor(QColor("yellow"));
-    } else if (markdown.startsWith("DONE:")) {
-        option->backgroundBrush.setColor(QColor("green"));
-    } else if (markdown.startsWith("BUG:")) {
-        option->backgroundBrush.setColor(QColor("orange"));
-    } else if (markdown.startsWith("ETA:")) {
-        option->backgroundBrush.setColor(QColor("purple"));
-    } else if (markdown.startsWith("P0:")) {
-        option->backgroundBrush.setColor(QColor("red"));
-    } else if (markdown.startsWith("P1:")) {
-        option->backgroundBrush.setColor(QColor("orange"));
-    } else if (markdown.startsWith("P2:")) {
-        option->backgroundBrush.setColor(QColor("yellow"));
-    } else if (markdown.startsWith("P3:")) {
-        option->backgroundBrush.setColor(QColor("purple"));
+        // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
+        auto markdown = index.data(Qt::DisplayRole).toString();
+        if (markdown.startsWith("TODO:")) {
+            option->backgroundBrush.setColor(QColor("yellow"));
+        } else if (markdown.startsWith("DONE:")) {
+            option->backgroundBrush.setColor(QColor("green"));
+        } else if (markdown.startsWith("BUG:")) {
+            option->backgroundBrush.setColor(QColor("orange"));
+        } else if (markdown.startsWith("ETA:")) {
+            option->backgroundBrush.setColor(QColor("purple"));
+        } else if (markdown.startsWith("P0:")) {
+            option->backgroundBrush.setColor(QColor("red"));
+        } else if (markdown.startsWith("P1:")) {
+            option->backgroundBrush.setColor(QColor("orange"));
+        } else if (markdown.startsWith("P2:")) {
+            option->backgroundBrush.setColor(QColor("yellow"));
+        } else if (markdown.startsWith("P3:")) {
+            option->backgroundBrush.setColor(QColor("purple"));
+        }
     }
 }

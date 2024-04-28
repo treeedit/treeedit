@@ -1,14 +1,10 @@
 find_package(Qt6 REQUIRED COMPONENTS Core Gui LinguistTools Sql Test Widgets)
 
 add_library(treeedit-core
-  treedelegate.h
-  treedelegate.cpp
-  treefile.h
-  treefile.cpp
-  treeitem.h
-  treeitem.cpp
-  treemodel.h
-  treemodel.cpp
+  treedelegate.h treedelegate.cpp
+  treefile.h treefile.cpp
+  treeitem.h treeitem.cpp
+  treemodel.h treemodel.cpp
 )
 target_link_libraries(treeedit-core Qt6::Core Qt6::Gui Qt6::Sql Qt6::Widgets)
 
@@ -19,8 +15,7 @@ set_source_files_properties(${MACOSX_APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATIO
 add_executable(treeedit
   MACOSX_BUNDLE
   main.cpp
-  mainwindow.h
-  mainwindow.cpp
+  mainwindow.h mainwindow.cpp
   mainwindow.qrc
   mainwindow.ui
   ${MACOSX_APP_ICON}
