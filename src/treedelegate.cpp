@@ -8,7 +8,7 @@ TreeDelegate::TreeDelegate() : _document(std::make_unique<QTextDocument>()) {}
 
 void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                          const QModelIndex &index) const {
-    auto opt = option;
+    QStyleOptionViewItem opt(option);
     initStyleOption(&opt, index);
 
     auto markdown = index.data(Qt::DisplayRole).toString();
@@ -28,7 +28,7 @@ void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
 QSize TreeDelegate::sizeHint(const QStyleOptionViewItem &option,
                              const QModelIndex &index) const {
-    auto opt = option;
+    QStyleOptionViewItem opt(option);
     initStyleOption(&opt, index);
 
     auto markdown = index.data(Qt::DisplayRole).toString();
@@ -42,7 +42,7 @@ QSize TreeDelegate::sizeHint(const QStyleOptionViewItem &option,
 QWidget *TreeDelegate::createEditor(QWidget *parent,
                                     const QStyleOptionViewItem &option,
                                     const QModelIndex &index) const {
-    auto opt = option;
+    QStyleOptionViewItem opt(option);
     initStyleOption(&opt, index);
 
     auto *editor = new QLineEdit(parent);
@@ -70,13 +70,13 @@ void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
         option->font.fromString(font.toString());
     }
 
-    if (option->state & QStyle::State_Selected) {
-        QBrush highlight = option->palette.highlight();
-        option->backgroundBrush.swap(highlight);
-    }
+    auto highlight = option->palette.highlight();
+    auto base = option->palette.base();
+    option->backgroundBrush.swap(
+        option->state & QStyle::State_Selected ? highlight : base);
 
-    auto markdown = index.data(Qt::DisplayRole).toString();
     // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
+    auto markdown = index.data(Qt::DisplayRole).toString();
     if (markdown.startsWith("TODO:")) {
         option->backgroundBrush.setColor(QColor("yellow"));
     } else if (markdown.startsWith("DONE:")) {
