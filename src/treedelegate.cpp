@@ -11,19 +11,23 @@ void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     QStyleOptionViewItem opt(option);
     initStyleOption(&opt, index);
 
-    auto markdown = index.data(Qt::DisplayRole).toString();
-    _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
-    _document->setDefaultFont(opt.font);
-    _document->setTextWidth(opt.rect.width());
+    if (index.column() == 0) {
+        auto markdown = index.data(Qt::DisplayRole).toString();
+        _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
+        _document->setDefaultFont(opt.font);
+        _document->setTextWidth(opt.rect.width());
 
-    painter->fillRect(opt.rect, opt.backgroundBrush);
+        painter->fillRect(opt.rect, opt.backgroundBrush);
 
-    painter->save();
-    painter->translate(opt.rect.topLeft());
+        painter->save();
+        painter->translate(opt.rect.topLeft());
 
-    _document->drawContents(painter);
+        _document->drawContents(painter);
 
-    painter->restore();
+        painter->restore();
+    } else {
+        QStyledItemDelegate::paint(painter, option, index);
+    }
 }
 
 QSize TreeDelegate::sizeHint(const QStyleOptionViewItem &option,
@@ -31,12 +35,16 @@ QSize TreeDelegate::sizeHint(const QStyleOptionViewItem &option,
     QStyleOptionViewItem opt(option);
     initStyleOption(&opt, index);
 
-    auto markdown = index.data(Qt::DisplayRole).toString();
-    _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
-    _document->setDefaultFont(opt.font);
-    _document->setTextWidth(opt.rect.width());
+    if (index.column() == 0) {
+        auto markdown = index.data(Qt::DisplayRole).toString();
+        _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
+        _document->setDefaultFont(opt.font);
+        _document->setTextWidth(opt.rect.width());
 
-    return QSize(_document->idealWidth(), _document->size().height());
+        return QSize(_document->idealWidth(), _document->size().height());
+    } else {
+        return QStyledItemDelegate::sizeHint(option, index);
+    }
 }
 
 QWidget *TreeDelegate::createEditor(QWidget *parent,
@@ -45,22 +53,34 @@ QWidget *TreeDelegate::createEditor(QWidget *parent,
     QStyleOptionViewItem opt(option);
     initStyleOption(&opt, index);
 
-    auto *editor = new QLineEdit(parent);
-    editor->setFont(opt.font);
+    if (index.column() == 0) {
+        auto *editor = new QLineEdit(parent);
+        editor->setFont(opt.font);
 
-    return editor;
+        return editor;
+    } else {
+        return QStyledItemDelegate::createEditor(parent, option, index);
+    }
 }
 
 void TreeDelegate::setEditorData(QWidget *editor,
                                  const QModelIndex &index) const {
-    auto *line_edit = qobject_cast<QLineEdit *>(editor);
-    line_edit->setText(index.data(Qt::EditRole).toString());
+    if (index.column() == 0) {
+        auto *line_edit = qobject_cast<QLineEdit *>(editor);
+        line_edit->setText(index.data(Qt::EditRole).toString());
+    } else {
+        QStyledItemDelegate::setEditorData(editor, index);
+    }
 }
 
 void TreeDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                 const QModelIndex &index) const {
-    auto *line_edit = qobject_cast<QLineEdit *>(editor);
-    model->setData(index, line_edit->text());
+    if (index.column() == 0) {
+        auto *line_edit = qobject_cast<QLineEdit *>(editor);
+        model->setData(index, line_edit->text());
+    } else {
+        QStyledItemDelegate::setModelData(editor, model, index);
+    }
 }
 
 void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
