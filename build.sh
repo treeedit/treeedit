@@ -9,5 +9,5 @@ pushd build/test
 popd
 
 pushd build/src
-macdeployqt "Tree Edit.app" -codesign="Developer ID Application: Paul Borza (S4M4K4L3FB)" -dmg
+macdeployqt "Tree Edit.app" -codesign="Mac Developer: Paul Borza (976ZM2SB6H)" -dmg
 popd
