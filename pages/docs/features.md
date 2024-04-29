@@ -6,7 +6,7 @@ title: Features
 
 ## Markdown
 
-Tree Edit uses the [`QTextDocument::setMarkdown`](https://doc.qt.io/qt-6/qtextdocument.html#setMarkdown) function to set text as Markdown using the CommonMark dialect.
+Tree Edit uses the [`QTextEdit::setMarkdown`](https://doc.qt.io/qt-6/qtextedit.html#markdown-prop) function to set text as Markdown using the MarkdownDialectGitHub dialect.
 
 For a complete list of supported features of the CommonMark Markdown dialect, please see the [official CommonMark specification](https://commonmark.org/help).
 

@@ -20,6 +20,10 @@ void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
         _textedit->setFixedHeight(opt.rect.height());
         _textedit->setReadOnly(true);
 
+        // Hides the scrollbars.
+        _textedit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        _textedit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
         painter->save();
         painter->translate(opt.rect.topLeft());
 
