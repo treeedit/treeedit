@@ -62,7 +62,10 @@ void MainWindow::on_actionAppendChild_triggered() {
         auto last = _tree_model->appendChild(index);
 
         if (last.isValid()) {
+
+            // Scrolls into view, selects, and edits.
             ui->treeView->scrollTo(last);
+            ui->treeView->setCurrentIndex(last);
             ui->treeView->edit(last);
         }
     }
@@ -74,7 +77,10 @@ void MainWindow::on_actionAppendSibling_triggered() {
         auto last = _tree_model->appendSibling(index);
 
         if (last.isValid()) {
+
+            // Scrolls into view, selects, and edits.
             ui->treeView->scrollTo(last);
+            ui->treeView->setCurrentIndex(last);
             ui->treeView->edit(last);
         }
     }
@@ -86,7 +92,10 @@ void MainWindow::on_actionPrependSibling_triggered() {
         auto last = _tree_model->prependSibling(index);
 
         if (last.isValid()) {
+
+            // Scrolls into view, selects, and edits.
             ui->treeView->scrollTo(last);
+            ui->treeView->setCurrentIndex(last);
             ui->treeView->edit(last);
         }
     }
