@@ -35,6 +35,8 @@ private slots:
 
   void on_actionFont_triggered();
 
+  void on_actionDocs_triggered();
+
   private:
   Ui::MainWindow *ui;
 
