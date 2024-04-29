@@ -3,7 +3,7 @@
 
 #include <QSettings>
 #include <QStyledItemDelegate>
-#include <QTextDocument>
+#include <QTextEdit>
 
 class TreeDelegate : public QStyledItemDelegate {
 public:
@@ -25,7 +25,7 @@ protected:
                          const QModelIndex &index) const override;
 
 private:
-    std::unique_ptr<QTextDocument> _document;
+    std::unique_ptr<QTextEdit> _textedit;
     QSettings _settings;
 };
 

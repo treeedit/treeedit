@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include <QPainter>
 
-TreeDelegate::TreeDelegate() : _document(std::make_unique<QTextDocument>()) {}
+TreeDelegate::TreeDelegate() : _textedit(std::make_unique<QTextEdit>()) {}
 
 void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                          const QModelIndex &index) const {
@@ -13,16 +13,17 @@ void TreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
     if (index.column() == 0) {
         auto markdown = index.data(Qt::DisplayRole).toString();
-        _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
-        _document->setDefaultFont(opt.font);
-        _document->setTextWidth(opt.rect.width());
-
-        painter->fillRect(opt.rect, opt.backgroundBrush);
+        _textedit->setMarkdown(markdown);
+        _textedit->setFont(opt.font);
+        _textedit->setPalette(opt.palette);
+        _textedit->setFixedWidth(opt.rect.width());
+        _textedit->setFixedHeight(opt.rect.height());
+        _textedit->setReadOnly(true);
 
         painter->save();
         painter->translate(opt.rect.topLeft());
 
-        _document->drawContents(painter);
+        _textedit->render(painter);
 
         painter->restore();
     } else {
@@ -37,11 +38,13 @@ QSize TreeDelegate::sizeHint(const QStyleOptionViewItem &option,
 
     if (index.column() == 0) {
         auto markdown = index.data(Qt::DisplayRole).toString();
-        _document->setMarkdown(markdown, QTextDocument::MarkdownDialectCommonMark);
-        _document->setDefaultFont(opt.font);
-        _document->setTextWidth(opt.rect.width());
+        _textedit->setMarkdown(markdown);
+        _textedit->setFont(opt.font);
+        _textedit->setPalette(opt.palette);
+        _textedit->document()->setTextWidth(opt.rect.width());
 
-        return QSize(_document->idealWidth(), _document->size().height());
+        return QSize(_textedit->document()->idealWidth(),
+                     _textedit->document()->size().height());
     } else {
         return QStyledItemDelegate::sizeHint(option, index);
     }
@@ -54,10 +57,10 @@ QWidget *TreeDelegate::createEditor(QWidget *parent,
     initStyleOption(&opt, index);
 
     if (index.column() == 0) {
-        auto *editor = new QLineEdit(parent);
-        editor->setFont(opt.font);
+        auto *lineedit = new QLineEdit(parent);
+        lineedit->setFont(opt.font);
 
-        return editor;
+        return lineedit;
     } else {
         return QStyledItemDelegate::createEditor(parent, option, index);
     }
@@ -66,8 +69,8 @@ QWidget *TreeDelegate::createEditor(QWidget *parent,
 void TreeDelegate::setEditorData(QWidget *editor,
                                  const QModelIndex &index) const {
     if (index.column() == 0) {
-        auto *line_edit = qobject_cast<QLineEdit *>(editor);
-        line_edit->setText(index.data(Qt::EditRole).toString());
+        auto *lineedit = qobject_cast<QLineEdit *>(editor);
+        lineedit->setText(index.data(Qt::EditRole).toString());
     } else {
         QStyledItemDelegate::setEditorData(editor, index);
     }
@@ -76,8 +79,8 @@ void TreeDelegate::setEditorData(QWidget *editor,
 void TreeDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                 const QModelIndex &index) const {
     if (index.column() == 0) {
-        auto *line_edit = qobject_cast<QLineEdit *>(editor);
-        model->setData(index, line_edit->text());
+        auto *lineedit = qobject_cast<QLineEdit *>(editor);
+        model->setData(index, lineedit->text());
     } else {
         QStyledItemDelegate::setModelData(editor, model, index);
     }
@@ -91,30 +94,27 @@ void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
     }
 
     if (option->state & QStyle::State_Selected) {
-        auto highlight = option->palette.highlight();
-        option->backgroundBrush.swap(highlight);
+        option->palette.setBrush(QPalette::Base, option->palette.highlight());
+        option->palette.setBrush(QPalette::Text, option->palette.highlightedText());
     } else {
-        auto base = option->palette.base();
-        option->backgroundBrush.swap(base);
-
         // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
         auto markdown = index.data(Qt::DisplayRole).toString();
         if (markdown.startsWith("TODO:")) {
-            option->backgroundBrush.setColor(QColor("yellow"));
+            option->palette.setBrush(QPalette::Base, QColor("yellow"));
         } else if (markdown.startsWith("DONE:")) {
-            option->backgroundBrush.setColor(QColor("green"));
+            option->palette.setBrush(QPalette::Base, QColor("green"));
         } else if (markdown.startsWith("BUG:")) {
-            option->backgroundBrush.setColor(QColor("orange"));
+            option->palette.setBrush(QPalette::Base, QColor("orange"));
         } else if (markdown.startsWith("ETA:")) {
-            option->backgroundBrush.setColor(QColor("purple"));
+            option->palette.setBrush(QPalette::Base, QColor("purple"));
         } else if (markdown.startsWith("P0:")) {
-            option->backgroundBrush.setColor(QColor("red"));
+            option->palette.setBrush(QPalette::Base, QColor("red"));
         } else if (markdown.startsWith("P1:")) {
-            option->backgroundBrush.setColor(QColor("orange"));
+            option->palette.setBrush(QPalette::Base, QColor("orange"));
         } else if (markdown.startsWith("P2:")) {
-            option->backgroundBrush.setColor(QColor("yellow"));
+            option->palette.setBrush(QPalette::Base, QColor("yellow"));
         } else if (markdown.startsWith("P3:")) {
-            option->backgroundBrush.setColor(QColor("purple"));
+            option->palette.setBrush(QPalette::Base, QColor("purple"));
         }
     }
 }
