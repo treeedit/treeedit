@@ -105,20 +105,28 @@ void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
         auto markdown = index.data(Qt::DisplayRole).toString();
         if (markdown.startsWith("TODO:")) {
             option->palette.setBrush(QPalette::Base, QColor("yellow"));
+            option->palette.setBrush(QPalette::Text, QColor("black"));
         } else if (markdown.startsWith("DONE:")) {
             option->palette.setBrush(QPalette::Base, QColor("green"));
+            option->palette.setBrush(QPalette::Text, QColor("white"));
         } else if (markdown.startsWith("BUG:")) {
             option->palette.setBrush(QPalette::Base, QColor("orange"));
+            option->palette.setBrush(QPalette::Text, QColor("black"));
         } else if (markdown.startsWith("ETA:")) {
             option->palette.setBrush(QPalette::Base, QColor("purple"));
+            option->palette.setBrush(QPalette::Text, QColor("white"));
         } else if (markdown.startsWith("P0:")) {
             option->palette.setBrush(QPalette::Base, QColor("red"));
+            option->palette.setBrush(QPalette::Text, QColor("white"));
         } else if (markdown.startsWith("P1:")) {
             option->palette.setBrush(QPalette::Base, QColor("orange"));
+            option->palette.setBrush(QPalette::Text, QColor("black"));
         } else if (markdown.startsWith("P2:")) {
             option->palette.setBrush(QPalette::Base, QColor("yellow"));
+            option->palette.setBrush(QPalette::Text, QColor("black"));
         } else if (markdown.startsWith("P3:")) {
             option->palette.setBrush(QPalette::Base, QColor("purple"));
+            option->palette.setBrush(QPalette::Text, QColor("white"));
         }
     }
 }
