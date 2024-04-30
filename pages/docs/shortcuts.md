@@ -4,7 +4,7 @@ title: Shortcuts
 
 # Shortcuts
 
-## Keyboard shortcuts
+## Keyboard
 
 ### Navigation
 
@@ -33,7 +33,7 @@ title: Shortcuts
 
 Tree Edit inherits all of the [QTreeView key bindings](https://doc.qt.io/qt-6/qtreeview.html#key-bindings).
 
-## Mouse shortcuts
+## Mouse
 
 | Mouse | Action |
 |---|---|
