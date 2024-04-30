@@ -25,3 +25,7 @@ For a complete list of supported features of the CommonMark Markdown dialect, pl
 
 We recommend you download and install a font, such as the [Inter font](https://fonts.google.com/specimen/Inter), that has support for ligatures.
 Then, please use the *Menu > View > Font* functionality to select the font for displaying nodes.
+
+### Appearance
+
+The app changes colors following the system setting when it comes to light and dark modes.
