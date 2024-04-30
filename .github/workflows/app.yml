@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          lfs: true
       - name: Setup Homebrew
         uses: homebrew/actions/setup-homebrew@master
       - name: Install Homebrew Packages
