@@ -112,7 +112,7 @@ void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
         } else if (markdown.startsWith("BUG:")) {
             option->palette.setBrush(QPalette::Base, QColor("orange"));
             option->palette.setBrush(QPalette::Text, QColor("black"));
-        } else if (markdown.startsWith("ETA:")) {
+        } else if (markdown.startsWith("ASK:")) {
             option->palette.setBrush(QPalette::Base, QColor("purple"));
             option->palette.setBrush(QPalette::Text, QColor("white"));
         } else if (markdown.startsWith("P0:")) {
