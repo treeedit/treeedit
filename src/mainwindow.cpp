@@ -32,8 +32,14 @@ void MainWindow::on_actionNew_triggered() {
         error.exec();
     }
 
+    _tree_proxy = new QSortFilterProxyModel;
+    _tree_proxy->setRecursiveFilteringEnabled(true);
+    _tree_proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
     _tree_model = new TreeModel(_tree_file);
-    ui->treeView->setModel(_tree_model);
+    _tree_proxy->setSourceModel(_tree_model);
+
+    ui->treeView->setModel(_tree_proxy);
 }
 
 void MainWindow::on_actionOpen_triggered() {
@@ -43,11 +49,16 @@ void MainWindow::on_actionOpen_triggered() {
     auto path = QFileDialog::getOpenFileName(
         this, tr("Open File"), QDir::homePath(), tr("Tree Edit (*.db)"));
 
-    // _tree_file =
-    //     new TreeFile("~/treeedit/packages/treeedit-app/sample.db");
     _tree_file = new TreeFile(path);
+
+    _tree_proxy = new QSortFilterProxyModel;
+    _tree_proxy->setRecursiveFilteringEnabled(true);
+    _tree_proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
     _tree_model = new TreeModel(_tree_file);
-    ui->treeView->setModel(_tree_model);
+    _tree_proxy->setSourceModel(_tree_model);
+
+    ui->treeView->setModel(_tree_proxy);
 
 #ifdef QT_DEBUG
     // https://wiki.qt.io/Model_Test
@@ -133,4 +144,10 @@ void MainWindow::on_actionFont_triggered() {
 
 void MainWindow::on_actionDocs_triggered() {
     QDesktopServices::openUrl(QUrl("https://treeedit.org"));
+}
+
+void MainWindow::on_lineEdit_textChanged(const QString &arg1) {
+    if (_tree_proxy) {
+        _tree_proxy->setFilterFixedString(arg1);
+    }
 }

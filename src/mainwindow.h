@@ -7,6 +7,7 @@
 
 #include <QMainWindow>
 #include <QTreeWidget>
+#include <QSortFilterProxyModel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,11 +38,14 @@ private slots:
 
   void on_actionDocs_triggered();
 
+  void on_lineEdit_textChanged(const QString &arg1);
+
   private:
   Ui::MainWindow *ui;
 
   TreeFile *_tree_file;
   TreeModel *_tree_model;
   TreeDelegate *_tree_delegate;
+  QSortFilterProxyModel *_tree_proxy;
 };
 #endif // MAINWINDOW_H

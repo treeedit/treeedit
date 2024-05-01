@@ -29,3 +29,8 @@ Then, please use the *Menu > View > Font* functionality to select the font for d
 ### Appearance
 
 The app changes colors following the system setting when it comes to light and dark modes.
+
+## Filter
+
+It's now possible to filter and recursively search for text in nodes.
+Please note that the filter is case insensitive.
