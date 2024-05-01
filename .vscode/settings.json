@@ -9,6 +9,7 @@
   ],
   "editor.tabSize": 2,
   "files.exclude": {
+    "**/build": true,
     "**/build-*": true
   },
   "files.insertFinalNewline": true,
