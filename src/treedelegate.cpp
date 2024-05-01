@@ -1,6 +1,5 @@
 #include "treedelegate.h"
 
-#include <QFont>
 #include <QLineEdit>
 #include <QPainter>
 
@@ -92,11 +91,6 @@ void TreeDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 
 void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
                                    const QModelIndex &index) const {
-    auto font = _settings.value("view/font");
-    if (font.isValid()) {
-        option->font.fromString(font.toString());
-    }
-
     if (option->state & QStyle::State_Selected) {
         option->palette.setBrush(QPalette::Base, option->palette.highlight());
         option->palette.setBrush(QPalette::Text, option->palette.highlightedText());

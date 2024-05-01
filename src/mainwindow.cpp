@@ -13,6 +13,15 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    QSettings settings;
+    auto fontVariant = settings.value("view/font");
+    if (fontVariant.isValid()) {
+        QFont font;
+        if (font.fromString(fontVariant.toString())) {
+            QApplication::setFont(font);
+        }
+    }
+
     setWindowIcon(QIcon(":/icons/treeedit.icns"));
 }
 
