@@ -48,7 +48,7 @@ void MainWindow::on_actionNew_triggered() {
     _tree_model = new TreeModel(_tree_file);
     _tree_proxy->setSourceModel(_tree_model);
 
-    ui->treeView->setModel(_tree_proxy);
+    ui->treeView->setModel(_tree_model);
 }
 
 void MainWindow::on_actionOpen_triggered() {
@@ -67,7 +67,7 @@ void MainWindow::on_actionOpen_triggered() {
     _tree_model = new TreeModel(_tree_file);
     _tree_proxy->setSourceModel(_tree_model);
 
-    ui->treeView->setModel(_tree_proxy);
+    ui->treeView->setModel(_tree_model);
 
 #ifdef QT_DEBUG
     // https://wiki.qt.io/Model_Test

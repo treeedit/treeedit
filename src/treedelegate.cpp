@@ -97,28 +97,16 @@ void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
     } else {
         // https://www.w3.org/TR/SVG11/types.html#ColorKeywords
         auto markdown = index.data(Qt::DisplayRole).toString();
-        if (markdown.startsWith("TODO:")) {
-            option->palette.setBrush(QPalette::Base, QColor("yellow"));
-            option->palette.setBrush(QPalette::Text, QColor("black"));
-        } else if (markdown.startsWith("DONE:")) {
-            option->palette.setBrush(QPalette::Base, QColor("green"));
-            option->palette.setBrush(QPalette::Text, QColor("white"));
-        } else if (markdown.startsWith("BUG:")) {
-            option->palette.setBrush(QPalette::Base, QColor("orange"));
-            option->palette.setBrush(QPalette::Text, QColor("black"));
-        } else if (markdown.startsWith("ASK:")) {
-            option->palette.setBrush(QPalette::Base, QColor("purple"));
-            option->palette.setBrush(QPalette::Text, QColor("white"));
-        } else if (markdown.startsWith("P0:")) {
+        if (markdown.startsWith("P0:") || markdown.startsWith("RISK:")) {
             option->palette.setBrush(QPalette::Base, QColor("red"));
             option->palette.setBrush(QPalette::Text, QColor("white"));
-        } else if (markdown.startsWith("P1:")) {
+        } else if (markdown.startsWith("P1:") || markdown.startsWith("BUG:")) {
             option->palette.setBrush(QPalette::Base, QColor("orange"));
             option->palette.setBrush(QPalette::Text, QColor("black"));
-        } else if (markdown.startsWith("P2:")) {
+        } else if (markdown.startsWith("P2:") || markdown.startsWith("TODO:")) {
             option->palette.setBrush(QPalette::Base, QColor("yellow"));
             option->palette.setBrush(QPalette::Text, QColor("black"));
-        } else if (markdown.startsWith("P3:")) {
+        } else if (markdown.startsWith("P3:") || markdown.startsWith("ASK:")) {
             option->palette.setBrush(QPalette::Base, QColor("purple"));
             option->palette.setBrush(QPalette::Text, QColor("white"));
         }
