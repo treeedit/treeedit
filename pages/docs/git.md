@@ -13,6 +13,17 @@ git config diff.sqlite3.textconv "echo .dump | sqlite3"
 ```
 
 Second, add a `.gitattributes` file by following the instructions from
-https://github.com/treeedit/treeedit/blob/main/.gitattributes
+[Tree Edit `.gitattributes`](https://github.com/treeedit/treeedit/blob/main/.gitattributes)
+
+```
+*.sqlite diff=sqlite3
+*.db     filter=lfs diff=sqlite3 merge=lfs -text
+```
+
+The `.sqlite` files are tracked by Git and `.db` files are tracked by Git large file storage (LFS) as an example.
+LFS files can't be reverted to previous versions, so you may want to stick with the standard approach of committing Sqlite binaries to source control as if they're text files, albeit that's a big no no in the industry.
+
+Once you finish the setup, here's what you'll get in VS Code when committing Sqlite files to Git.
+It displays the SQL commands that have to be run to update the database from one version to another.
 
 ![VS Code Sqlite Git Diff](/images/vscode-git-diff.png)
