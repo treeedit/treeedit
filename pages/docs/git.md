@@ -1,4 +1,8 @@
-# Git
+---
+title: Tracking Sqlite files with Git
+---
+
+# Tracking Sqlite files with Git
 
 Did you know you can commit the Sqlite file that Tree Edit uses to persist the notes to Git?
 The problem is that the Sqlite files are binary, but don't fret!
