@@ -12,8 +12,7 @@ git config diff.sqlite3.binary true
 git config diff.sqlite3.textconv "echo .dump | sqlite3"
 ```
 
-Second, add a `.gitattributes` file by following the instructions from
-[Tree Edit `.gitattributes`](https://github.com/treeedit/treeedit/blob/main/.gitattributes)
+Second, add a `.gitattributes` file by following the instructions from [Tree Edit `.gitattributes`](https://github.com/treeedit/treeedit/blob/main/.gitattributes).
 
 ```
 *.sqlite diff=sqlite3
