@@ -1,6 +1,9 @@
-*.db   filter=lfs diff=lfs merge=lfs -text
 *.icns filter=lfs diff=lfs merge=lfs -text
 *.png  filter=lfs diff=lfs merge=lfs -text
 *.ttf  filter=lfs diff=lfs merge=lfs -text
 
+# NOTE: Must execute commands from https://treeedit.org/git for the Sqlite diff
+# to work. SQL diff works both when files are committed to git or LFS
+# (Large File Storge).
 *.sqlite diff=sqlite3
+*.db     filter=lfs diff=sqlite3 merge=lfs -text
