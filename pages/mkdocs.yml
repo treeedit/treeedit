@@ -2,6 +2,8 @@ site_name: Tree Edit
 repo_url: https://github.com/treeedit/treeedit
 theme:
   name: material
+  features:
+    - navigation.sections
   font:
     text: Rubik
     code: JetBrains Mono
@@ -20,6 +22,15 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to system preference
+
+nav:
+  - Getting Started:
+      - 'index.md'
+      - 'features.md'
+      - 'shortcuts.md'
+      - 'conventions.md'
+  - For Developers:
+      - 'git.md'
 
 markdown_extensions:
   - admonition
