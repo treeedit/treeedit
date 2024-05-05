@@ -22,6 +22,9 @@ Second, add a `.gitattributes` file by following the instructions from [Tree Edi
 *.sqlite diff=sqlite3
 *.db     filter=lfs diff=sqlite3 merge=lfs -text
 ```
+???+ note "Git large file storage (LFS)"
+
+    The `-text` argument tells the large file storage extension that this is **not** a text file, thus should not normalize line endings. For more information, please see the [Git end-of-line conversion docs](https://git-scm.com/docs/gitattributes#_end_of_line_conversion).
 
 The `.sqlite` files are tracked by Git and `.db` files are tracked by Git large file storage (LFS) as an example.
 LFS files can't be reverted to previous versions, so you may want to stick with the standard approach of committing Sqlite binaries to source control as if they're text files, albeit that's a big no no in the industry.
