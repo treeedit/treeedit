@@ -30,7 +30,7 @@ public:
 
   bool insert(int parent, int row);
   bool remove(int parent, int row);
-  bool moveItem(int sourceRow, int destinationRow, int parent);
+  bool moveItem(int sourceParent, int sourceRow, int destinationParent, int destinationRow);
 
 private:
   QSqlDatabase _db;
