@@ -41,6 +41,7 @@ public:
   QModelIndex prependSibling(const QModelIndex &index);
   void removeItem(const QModelIndex &index);
   void moveItem(const QModelIndex &index, int step);
+  void promoteItem(const QModelIndex &index);
 
 private:
   TreeFile *_tree_file;

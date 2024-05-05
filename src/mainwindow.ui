@@ -84,6 +84,7 @@
     <addaction name="separator"/>
     <addaction name="actionMoveUp"/>
     <addaction name="actionMoveDown"/>
+    <addaction name="actionPromote"/>
     <addaction name="separator"/>
     <addaction name="actionRemove"/>
    </widget>
@@ -185,6 +186,14 @@
   <action name="actionDocs">
    <property name="text">
     <string>Tree Edit Docs</string>
+   </property>
+  </action>
+  <action name="actionPromote">
+   <property name="text">
+    <string>Promote</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Left</string>
    </property>
   </action>
  </widget>

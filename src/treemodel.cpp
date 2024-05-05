@@ -198,3 +198,7 @@ void TreeModel::removeItem(const QModelIndex &index) {
 void TreeModel::moveItem(const QModelIndex &index, int step) {
   moveRow(index.parent(), index.row(), index.parent(), index.row() + step);
 }
+
+void TreeModel::promoteItem(const QModelIndex &index) {
+    // moveRow(index.parent(), index.row(), index.parent(), index.row() + step);
+}

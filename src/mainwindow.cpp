@@ -23,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     setWindowIcon(QIcon(":/icons/treeedit.icns"));
+
+    // ui->treeView->setDragEnabled(true);
+    // ui->treeView->setDragDropMode(QAbstractItemView::InternalMove);
+    // ui->treeView->setDropIndicatorShown(true);
+    // ui->treeView->setAcceptDrops(true);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -32,7 +37,7 @@ void MainWindow::on_actionNew_triggered() {
     ui->treeView->setItemDelegate(_tree_delegate);
 
     auto path = QFileDialog::getSaveFileName(
-        this, tr("Save File"), QDir::homePath(), tr("Tree Edit (*.db)"));
+        this, tr("Save File"), QDir::homePath(), tr("Tree Edit (*.db;*.sqlite)"));
 
     _tree_file = new TreeFile(path);
     if (!_tree_file->create()) {
@@ -56,7 +61,7 @@ void MainWindow::on_actionOpen_triggered() {
     ui->treeView->setItemDelegate(_tree_delegate);
 
     auto path = QFileDialog::getOpenFileName(
-        this, tr("Open File"), QDir::homePath(), tr("Tree Edit (*.db)"));
+        this, tr("Open File"), QDir::homePath(), tr("Tree Edit (*.db;*.sqlite)"));
 
     _tree_file = new TreeFile(path);
 
@@ -77,7 +82,7 @@ void MainWindow::on_actionOpen_triggered() {
 }
 
 void MainWindow::on_actionAppendChild_triggered() {
-    if (_tree_model) {
+    if (ui->treeView->model()) {
         auto index = ui->treeView->currentIndex();
         auto last = _tree_model->appendChild(index);
 
@@ -92,7 +97,7 @@ void MainWindow::on_actionAppendChild_triggered() {
 }
 
 void MainWindow::on_actionAppendSibling_triggered() {
-    if (_tree_model) {
+    if (ui->treeView->model()) {
         auto index = ui->treeView->currentIndex();
         auto last = _tree_model->appendSibling(index);
 
@@ -107,7 +112,7 @@ void MainWindow::on_actionAppendSibling_triggered() {
 }
 
 void MainWindow::on_actionPrependSibling_triggered() {
-    if (_tree_model) {
+    if (ui->treeView->model()) {
         auto index = ui->treeView->currentIndex();
         auto last = _tree_model->prependSibling(index);
 
@@ -122,21 +127,29 @@ void MainWindow::on_actionPrependSibling_triggered() {
 }
 
 void MainWindow::on_actionMoveUp_triggered() {
-    if (_tree_model) {
+    if (ui->treeView->model()) {
         auto index = ui->treeView->currentIndex();
         _tree_model->moveItem(index, -1);
     }
 }
 
 void MainWindow::on_actionMoveDown_triggered() {
-    if (_tree_model) {
+    if (ui->treeView->model()) {
         auto index = ui->treeView->currentIndex();
         _tree_model->moveItem(index, +1);
     }
 }
 
+void MainWindow::on_actionPromote_triggered()
+{
+    if (ui->treeView->model()) {
+        auto index = ui->treeView->currentIndex();
+        _tree_model->promoteItem(index);
+    }
+}
+
 void MainWindow::on_actionRemove_triggered() {
-    if (_tree_model) {
+    if (ui->treeView->model()) {
         auto index = ui->treeView->currentIndex();
         _tree_model->removeItem(index);
     }

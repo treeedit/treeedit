@@ -30,6 +30,7 @@ private slots:
   void on_actionPrependSibling_triggered();
   void on_actionMoveUp_triggered();
   void on_actionMoveDown_triggered();
+  void on_actionPromote_triggered();
   void on_actionRemove_triggered();
 
   void on_actionNew_triggered();
