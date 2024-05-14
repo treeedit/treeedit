@@ -29,6 +29,7 @@ If you start a node value with either one of the following substrings, then the 
 | `-:` | Background color turns :orange_square: orange. Foreground color turns :black_circle: black. |
 
 Usage:
-* `+` when something exceeds expectations.
-* `=` when something meets expectations.
-* `-` when something meets most expectations, but not all.
+
+* `+` when something or someone exceeds expectations.
+* `=` when something or someone meets expectations.
+* `-` when something or someone meets most expectations, but not all.
