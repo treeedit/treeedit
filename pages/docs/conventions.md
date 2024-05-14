@@ -24,8 +24,8 @@ If you start a node value with either one of the following substrings, then the 
 
 | Review | Behavior |
 |---|---|
-| `+:` | Background color turns :purple_green: green. Foreground color turns :white_circle: white. |
-| `=:` | Background color turns :purple_gray: gray. Foreground color turns :white_circle: white. |
+| `+:` | Background color turns :green_square: green. Foreground color turns :white_circle: white. |
+| `=:` | Background color turns :gray_square: gray. Foreground color turns :white_circle: white. |
 | `-:` | Background color turns :orange_square: orange. Foreground color turns :black_circle: black. |
 
 Usage:
