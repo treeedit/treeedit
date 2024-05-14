@@ -109,6 +109,15 @@ void TreeDelegate::initStyleOption(QStyleOptionViewItem *option,
         } else if (markdown.startsWith("P3:") || markdown.startsWith("ASK:")) {
             option->palette.setBrush(QPalette::Base, QColor("purple"));
             option->palette.setBrush(QPalette::Text, QColor("white"));
+        } else if (markdown.startsWith("+:")) {
+            option->palette.setBrush(QPalette::Base, QColor("green"));
+            option->palette.setBrush(QPalette::Text, QColor("white"));
+        } else if (markdown.startsWith("=:")) {
+            option->palette.setBrush(QPalette::Base, QColor("gray"));
+            option->palette.setBrush(QPalette::Text, QColor("white"));
+        } else if (markdown.startsWith("-:")) {
+            option->palette.setBrush(QPalette::Base, QColor("orange"));
+            option->palette.setBrush(QPalette::Text, QColor("black"));
         }
     }
 }
